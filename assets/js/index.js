@@ -1,6 +1,6 @@
-jQuery('#qrcodeCanvas').qrcode({
-  text: "http://jetienne.com/"
-});
+// jQuery('#qrcodeCanvas').qrcode({
+//   text: "http://jetienne.com/"
+// });
 
 Dropzone.autoDiscover = false;
 
@@ -161,38 +161,38 @@ var vm = new Vue({
       var parentDir = this.parentDirectory(path);
       loadFileOrDir(parentDir);
     },
-    genInstallURL: function (name, noEncode) {
-      var parts = [location.host];
-      var pathname = decodeURI(location.pathname);
-      if (!name) {
-        parts.push(pathname);
-      } else if (getExtention(name) == "ipa") {
-        parts.push("/-/ipa/link", pathname, name);
-      } else {
-        parts.push(pathname, name);
-      }
-      var urlPath = location.protocol + "//" + pathJoin(parts);
-      return noEncode ? urlPath : encodeURI(urlPath);
-    },
-    genQrcode: function (name, title) {
-      var urlPath = this.genInstallURL(name, true);
-      $("#qrcode-title").html(title || name || location.pathname);
-      $("#qrcode-link").attr("href", urlPath);
-      $('#qrcodeCanvas').empty().qrcode({
-        text: encodeURI(urlPath),
-      });
+    // genInstallURL: function (name, noEncode) {
+    //   var parts = [location.host];
+    //   var pathname = decodeURI(location.pathname);
+    //   if (!name) {
+    //     parts.push(pathname);
+    //   } else if (getExtention(name) == "ipa") {
+    //     parts.push("/-/ipa/link", pathname, name);
+    //   } else {
+    //     parts.push(pathname, name);
+    //   }
+    //   var urlPath = location.protocol + "//" + pathJoin(parts);
+    //   return noEncode ? urlPath : encodeURI(urlPath);
+    // },
+    // genQrcode: function (name, title) {
+    //   var urlPath = this.genInstallURL(name, true);
+    //   $("#qrcode-title").html(title || name || location.pathname);
+    //   $("#qrcode-link").attr("href", urlPath);
+    //   $('#qrcodeCanvas').empty().qrcode({
+    //     text: encodeURI(urlPath),
+    //   });
 
-      $("#qrcodeRight a").attr("href", urlPath);
-      $("#qrcode-modal").modal("show");
-    },
+    //   $("#qrcodeRight a").attr("href", urlPath);
+    //   $("#qrcode-modal").modal("show");
+    // },
     genDownloadURL: function (f) {
       var search = location.search;
       var sep = search == "" ? "?" : "&"
       return location.origin + "/" + f.path + location.search + sep + "download=true";
     },
-    shouldHaveQrcode: function (name) {
-      return ['apk', 'ipa'].indexOf(getExtention(name)) !== -1;
-    },
+    // shouldHaveQrcode: function (name) {
+    //   return ['apk', 'ipa'].indexOf(getExtention(name)) !== -1;
+    // },
     genFileClass: function (f) {
       if (f.type == "dir") {
         if (f.name == '.git') {

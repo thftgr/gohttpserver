@@ -1,7 +1,7 @@
 /* Image style */
 
 #scrollUp {
-    /*background-image: url("../imgs/top.png");*/
+    /* background-image: url("../imgs/top.png"); */
     bottom: 5px;
     right: 20px;
     width: 38px;
@@ -11,5 +11,7 @@
 }
 
 #scrollUp:after {
-    content: "Scroll to top";
+    content: url('../imgs/top.png');;
+    /* background-image: url("../imgs/top.png"); */
+
 }

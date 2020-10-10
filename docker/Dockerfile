@@ -11,5 +11,5 @@ VOLUME /app/public
 ADD assets ./assets
 COPY --from=0 /app/gohttpserver/gohttpserver .
 EXPOSE 8000
-ENTRYPOINT [ "/app/gohttpserver", "--root=/app/public" ]
+ENTRYPOINT [ "/app/gohttpserver", "--root=/app/public" ,"--upload" ,"--theme=black" ,"--title=\"THFTGR FILE SERVER\""]
 CMD []
