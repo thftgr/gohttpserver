@@ -35,11 +35,9 @@ type Configure struct {
 	XHeaders bool     `yaml:"xheaders"`
 	Upload   bool     `yaml:"upload"`
 	Delete   bool     `yaml:"delete"`
-	// PlistProxy      string   `yaml:"plistproxy"`
-	Title string `yaml:"title"`
-	Debug bool   `yaml:"debug"`
-	// GoogleTrackerID string   `yaml:"google-tracker-id"`
-	Auth struct {
+	Title    string   `yaml:"title"`
+	Debug    bool     `yaml:"debug"`
+	Auth     struct {
 		Type   string `yaml:"type"` // openid|http|github
 		OpenID string `yaml:"openid"`
 		HTTP   string `yaml:"http"`
@@ -55,7 +53,6 @@ func (l httpLogger) Log(record accesslog.LogRecord) {
 }
 
 var (
-	// defaultPlistProxy = "https://plistproxy.herokuapp.com/plist"
 	defaultOpenID = "https://login.netease.com/openid"
 	gcfg          = Configure{}
 	logger        = httpLogger{}
@@ -92,9 +89,6 @@ func parseFlags() error {
 	gcfg.Port = 8000
 	gcfg.Addr = ""
 	gcfg.Theme = "black"
-	// gcfg.PlistProxy = defaultPlistProxy
-	// gcfg.Auth.OpenID = defaultOpenID
-	// gcfg.GoogleTrackerID = "UA-81205425-2"
 	gcfg.Title = "Go HTTP File Server"
 
 	kingpin.HelpFlag.Short('h')
@@ -114,9 +108,7 @@ func parseFlags() error {
 	kingpin.Flag("xheaders", "used when behide nginx").BoolVar(&gcfg.XHeaders)
 	kingpin.Flag("cors", "enable cross-site HTTP request").BoolVar(&gcfg.Cors)
 	kingpin.Flag("debug", "enable debug mode").BoolVar(&gcfg.Debug)
-	// kingpin.Flag("plistproxy", "plist proxy when server is not https").Short('p').StringVar(&gcfg.PlistProxy)
 	kingpin.Flag("title", "server title").StringVar(&gcfg.Title)
-	// kingpin.Flag("google-tracker-id", "set to empty to disable it").StringVar(&gcfg.GoogleTrackerID)
 
 	kingpin.Parse() // first parse conf
 
@@ -151,18 +143,6 @@ func main() {
 	ss.Delete = gcfg.Delete
 	ss.AuthType = gcfg.Auth.Type
 
-	// if gcfg.PlistProxy != "" {
-	// 	u, err := url.Parse(gcfg.PlistProxy)
-	// 	if err != nil {
-	// 		log.Fatal(err)
-	// 	}
-	// 	u.Scheme = "https"
-	// 	ss.PlistProxy = u.String()
-	// }
-	// if ss.PlistProxy != "" {
-	// 	log.Printf("plistproxy: %s", strconv.Quote(ss.PlistProxy))
-	// }
-
 	var hdlr http.Handler = ss
 
 	hdlr = accesslog.NewLoggingHandler(hdlr, logger)
@@ -175,12 +155,6 @@ func main() {
 			user, pass := userpass[0], userpass[1]
 			hdlr = httpauth.SimpleBasicAuth(user, pass)(hdlr)
 		}
-		// case "openid":
-		// 	handleOpenID(gcfg.Auth.OpenID, false) // FIXME(ssx): set secure default to false
-		// 	// case "github":
-		// 	// 	handleOAuth2ID(gcfg.Auth.Type, gcfg.Auth.ID, gcfg.Auth.Secret) // FIXME(ssx): set secure default to false
-		// case "oauth2-proxy":
-		// 	handleOauth2()
 	}
 
 	// CORS
