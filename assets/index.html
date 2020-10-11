@@ -55,7 +55,8 @@
     <div class="col-md-12">
       <ol class="breadcrumb">
         <li>
-          <a v-on:click='changePath("/", $event)' href="/"><i class="fa fa-home"></i></a>
+          <!-- <a v-on:click='changePath("/", $event)' href="/"><i class="fa fa-home"></i></a> -->
+          <a href="/"><i class="fa fa-home"></i></a>
         </li>
         <li v-for="bc in breadcrumb.slice(0, breadcrumb.length-1)">
           <a v-on:click='changePath(bc.path, $event)' href="{{bc.path}}">{{bc.name}}</a>
@@ -169,6 +170,7 @@
               <form action="#" class="dropzone" id="upload-form"></form>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-default" @click="removeAllUploads">삭제</button>
               <button type="button" class="btn btn-default" data-dismiss="modal">완료</button>
             </div>
           </div>

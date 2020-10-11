@@ -1,7 +1,3 @@
-// jQuery('#qrcodeCanvas').qrcode({
-//   text: "http://jetienne.com/"
-// });
-
 Dropzone.autoDiscover = false;
 
 function getExtention(fname) {
@@ -114,17 +110,7 @@ var vm = new Vue({
     },
   },
   created: function () {
-    // $.ajax({
-    //   url: "/-/user",
-    //   method: "get",
-    //   dataType: "json",
-    //   success: function (ret) {
-    //     if (ret) {
-    //       this.user.email = ret.email;
-    //       this.user.name = ret.name;
-    //     }
-    //   }.bind(this)
-    // })
+
     this.myDropzone = new Dropzone("#upload-form", {
       paramName: "file",
       maxFilesize: 1024 * 1024 * 1024 * 1024,
@@ -240,13 +226,13 @@ var vm = new Vue({
       })
     },
     makeDirectory: function () {
-      var name = window.prompt("current path: " + location.pathname + "\nplease enter the new directory name", "")
+      var name = window.prompt("현재 경로: " + location.pathname + "\n새 폴더의 이름:", "")
       console.log(name)
       if (!name) {
         return
       }
       if (!checkPathNameLegal(name)) {
-        alert("Name should not contains any of \\/:*<>|")
+        alert("다음 문자열은 허용되지 않습니다. \\/:*<>|")
         return
       }
       $.ajax({

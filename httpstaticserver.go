@@ -192,21 +192,26 @@ func (s *HTTPStaticServer) hUploadOrMkdir(w http.ResponseWriter, req *http.Reque
 	// Large file (>32MB) will store in tmp directory
 	// The quickest operation is call os.Move instead of os.Copy
 	var copyErr error
-	if osFile, ok := file.(*os.File); ok && fileExists(osFile.Name()) {
-		tmpUploadPath := osFile.Name()
-		osFile.Close() // Windows can not rename opened file
-		log.Printf("Move %s -> %s", tmpUploadPath, dstPath)
-		copyErr = os.Rename(tmpUploadPath, dstPath)
-	} else {
-		dst, err := os.Create(dstPath)
-		if err != nil {
-			log.Println("Create file:", err)
-			http.Error(w, "File create "+err.Error(), http.StatusInternalServerError)
-			return
-		}
-		_, copyErr = io.Copy(dst, file)
-		dst.Close()
+	// if osFile, ok := file.(*os.File); ok && fileExists(osFile.Name()) {
+	// 	log.Printf("1")
+
+	// 	tmpUploadPath := osFile.Name()
+	// 	osFile.Close() // Windows can not rename opened file
+	// 	copyErr = os.Rename(tmpUploadPath, dstPath)
+	// 	log.Printf("Move %s -> %s", tmpUploadPath, dstPath)
+
+	// } else {
+	log.Printf("2")
+
+	dst, err := os.Create(dstPath)
+	if err != nil {
+		log.Println("Create file:", err)
+		http.Error(w, "File create "+err.Error(), http.StatusInternalServerError)
+		return
 	}
+	_, copyErr = io.Copy(dst, file)
+	dst.Close()
+	// }
 	if copyErr != nil {
 		log.Println("Handle upload file:", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
