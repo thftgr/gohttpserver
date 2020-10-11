@@ -127,7 +127,7 @@ var vm = new Vue({
     })
     this.myDropzone = new Dropzone("#upload-form", {
       paramName: "file",
-      maxFilesize: 10240,
+      maxFilesize: 1024 * 1024 * 1024 * 1024,
       addRemoveLinks: true,
       init: function () {
         this.on("uploadprogress", function (file, progress) {
