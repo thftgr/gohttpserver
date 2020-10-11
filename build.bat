@@ -1,2 +1,7 @@
+
+:home
 go build
-start gohttpserver --root="" --upload --theme=black --title="THFTGR FILE SERVER"
+@REM taskkill /f /im "gohttpserver.exe"
+gohttpserver --root="" --upload --theme=black --title="THFTGR FILE SERVER"
+
+goto home
